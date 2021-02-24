@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+  font-family: "Gill Sans";
+}
+
+body {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+nav {
+  font-size: large;
+  padding: 10px;
+}
+nav:hover {
+  background-color: yellow;
+  cursor: pointer;
+}
+
+li:hover {
+  color: blue;
+}
+
+li,
+ul {
+  list-style-type: none;
+}
