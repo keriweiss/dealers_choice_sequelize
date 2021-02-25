@@ -10,9 +10,9 @@ class Restaurant extends Model {}
 Restaurant.init(
   {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING(20),
       primaryKey: true,
-      defaultValue: DataTypes.UUIDV4,
+      // defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.STRING(30),
@@ -68,7 +68,7 @@ Unique_pizza.init(
     },
     unique_name: DataTypes.STRING,
   },
-  { sequelize: db, modelName: "unique-pizza" }
+  { sequelize: db, modelName: "unique_pizza" }
 );
 
 Pizza.belongsToMany(Pizza, {
@@ -86,6 +86,7 @@ Restaurant.belongsToMany(Pizza, { through: Unique_pizza });
 
 const restaurants = [
   {
+    id: "salandcarmine",
     name: "Sal and Carmine",
     neighborhood: "UWS",
     waitservice: false,
@@ -93,6 +94,7 @@ const restaurants = [
     URL: "https://www.salandcarminepizza.com/",
   },
   {
+    id: "joes",
     name: "Joes",
     neighborhood: "Greenwich Village",
     waitservice: false,
@@ -100,6 +102,7 @@ const restaurants = [
     URL: "http://www.joespizzanyc.com/",
   },
   {
+    id: "pauliegees",
     name: "Paulie Gee's",
     neighborhood: "Greenpoint",
     waitservice: true,
@@ -107,6 +110,7 @@ const restaurants = [
     URL: "https://pauliegee.com/",
   },
   {
+    id: "rubirosa",
     name: "Rubirosa",
     neighborhood: "Nolita",
     waitservice: true,
@@ -115,6 +119,7 @@ const restaurants = [
     URL: "https://www.rubirosanyc.com/",
   },
   {
+    id: "bestpizza",
     name: "Best Pizza",
     neighborhood: "Williamsburg",
     waitservice: false,
@@ -123,6 +128,7 @@ const restaurants = [
     URL: "https://www.bestpizzawilliamsburg.com/",
   },
   {
+    id: "landb",
     name: "L & B Spumoni Gardens",
     neighborhood: "Bensonhurst",
     waitservice: true,
@@ -130,6 +136,7 @@ const restaurants = [
     URL: "https://spumonigardens.com/",
   },
   {
+    id: "luigis",
     name: "Luigis",
     neighborhood: "South Slope",
     waitservice: false,
@@ -160,14 +167,15 @@ const syncAndSeed = async () => {
     Luigi,
   ] = await Promise.all(
     restaurants.map(
-      ({ name, neighborhood, waitservice, slice, year_opened, URL }) =>
+      ({ id, name, neighborhood, waitservice, slice, year_opened, URL }) =>
         Restaurant.create({
-          name: name,
-          neighborhood: neighborhood,
-          waitservice: waitservice,
-          slice: slice,
-          year_opened: year_opened,
-          URL: URL,
+          id,
+          name,
+          neighborhood,
+          waitservice,
+          slice,
+          year_opened,
+          URL,
         })
     )
   );

@@ -20,6 +20,14 @@ app.get("/", async (req, res, next) => {
   }
 });
 
+app.get("/:id", async (req, res, next) => {
+  try {
+    res.sendFile(path.join(__dirname, "popup.html"));
+  } catch (err) {
+    next(err);
+  }
+});
+
 const run = async () => {
   try {
     await syncAndSeed();

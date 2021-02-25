@@ -1,12 +1,28 @@
 * {
   box-sizing: border-box;
   font-family: "Gill Sans";
+  color: white;
 }
 
 body {
+  font-size: large;
+  font-weight: bolder;
   display: flex;
-  flex-flow: column;
+  flex-direction: column;
   align-items: center;
+  background: url(pizzabackground.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: 80%;
+}
+
+#restaurant-popup {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  /* background: rgb(255, 255, 255, 0.8); */
+  color: white;
 }
 
 nav {
@@ -16,6 +32,7 @@ nav {
 nav:hover {
   background-color: yellow;
   cursor: pointer;
+  color: black;
 }
 
 li:hover {
@@ -25,4 +42,32 @@ li:hover {
 li,
 ul {
   list-style-type: none;
+  padding: 20px;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  background-color: yellow;
+  color: black;
+}
+
+button {
+  font-family: "Gill Sans";
+  color: white;
+  border: 0;
+  background-color: transparent;
+  font-size: large;
+}
+
+button:hover {
+  background-color: yellow;
+  color: black;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: 0;
 }
