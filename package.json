@@ -25,6 +25,7 @@
     "cli": "^1.0.1",
     "express": "^4.17.1",
     "path": "^0.12.7",
+    "sequelize": "^6.5.0",
     "sequelizepg": "^1.0.0",
     "webpack": "^5.23.0"
   },
