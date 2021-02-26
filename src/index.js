@@ -1,13 +1,11 @@
 import axios from "axios";
 
-let whatsPizza = document.querySelector("#whatspizza");
-let restaurantList = document.querySelector("#restaurant-list");
-let restaurantPopup = document.querySelector("#restaurant-popup");
-let restaurantId, restDetails, restaurantsPizzas, pizzaPile, toppings;
-
 const createEl = (el = "div") => document.createElement(el);
 const nav = document.querySelector("nav");
-const content = document.querySelector("#content");
+let restaurantList = document.querySelector("#restaurant-list");
+let restaurantPopup = document.querySelector("#restaurant-popup");
+
+let restDetails, restaurantsPizzas, pizzaPile, toppings;
 
 const renderRestaurant = (restaurants) => {
   for (const restaurant of restaurants) {
@@ -24,7 +22,6 @@ const renderMain = async () => {
   restaurantList.innerHTML = "";
   const restaurants = (await axios.get("/api/restaurant")).data;
   await renderRestaurant(restaurants);
-  await renderWhatIsPizza(toppings);
 };
 
 const renderPopup = async (restDetails) => {
@@ -49,11 +46,8 @@ const renderPopup = async (restDetails) => {
   restaurantsPizzas = pizzas;
 };
 
-const renderWhatIsPizza = async (toppings) => {};
-
 const renderPizzas = async (restaurantsPizzas, toppings) => {
-  const pizzaPile = createEl();
-  pizzaPile.id = "pizzapile";
+  pizzaPile = createEl();
   restaurantsPizzas.forEach((za) => {
     const pie = createEl("li");
     za.unique_pizza.unique_name
@@ -65,7 +59,6 @@ const renderPizzas = async (restaurantsPizzas, toppings) => {
           pie.innerHTML += `<br><span id = toppingsLabel>Toppings:<span>`;
           for (let topping of base.toppings) {
             if (topping.name !== za.name) pizzaPile.appendChild(pie);
-            console.log(restaurantsPizzas);
             const toppingsList = createEl("ul");
             toppingsList.innerHTML = `${topping.name}`;
             pie.appendChild(toppingsList);
@@ -88,7 +81,7 @@ document.addEventListener("click", async (ev) => {
     // Had trouble getting the hash change to word properly. The hash would change correctly,
     // but popup would open with previous hash, not changed.
     // restaurantId = window.location.hash.slice(1);
-    restaurantId = ev.target.parentElement.id;
+    const restaurantId = ev.target.parentElement.id;
     window.open(`/${restaurantId}`, "popup", "width=800,height=800");
   }
   if (ev.target.id === "menupreview") {
@@ -96,8 +89,6 @@ document.addEventListener("click", async (ev) => {
       renderPizzas(restaurantsPizzas, toppings);
       isPreview = true;
     } else {
-      pizzaPile = document.querySelector("#pizzapile");
-      console.log(pizzaPile);
       restaurantPopup.removeChild(pizzaPile);
       isPreview = false;
     }
@@ -105,7 +96,7 @@ document.addEventListener("click", async (ev) => {
 });
 
 document.addEventListener("DOMContentLoaded", async (ev) => {
-  restaurantId = location.pathname.slice(1);
+  const restaurantId = location.pathname.slice(1);
   toppings = (await axios.get(`/api/pizza`)).data;
   restDetails = (await axios.get(`/api/restaurant/${restaurantId}`)).data;
   await renderPopup(restDetails);
