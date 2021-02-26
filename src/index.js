@@ -1,9 +1,9 @@
 import axios from "axios";
 
-let pizzaList = document.querySelector("#pizza-list");
+let whatsPizza = document.querySelector("#whatspizza");
 let restaurantList = document.querySelector("#restaurant-list");
 let restaurantPopup = document.querySelector("#restaurant-popup");
-let restaurantId, restDetails, restaurantsPizzas;
+let restaurantId, restDetails, restaurantsPizzas, pizzaPile, toppings;
 
 const createEl = (el = "div") => document.createElement(el);
 const nav = document.querySelector("nav");
@@ -19,60 +19,65 @@ const renderRestaurant = (restaurants) => {
   }
 };
 
-// const renderDetails = (restDetails) => {
-//   const li = createEl("li");
-//   li.innerHTML = restDetails.neighborhood;
-//   const restaurant = document.querySelector(`#${restDetails.id}`);
-//   console.log(restDetails);
-//   for (const pizza of restDetails.pizzas) {
-//     const ul = createEl("ul");
-//     ul.innerHTML = pizza["unique-pizza"]["unique_name"]
-//       ? `${pizza["unique-pizza"]["unique_name"]}: ${pizza.name}`
-//       : pizza.name;
-//     li.appendChild(ul);
-//   }
-//   restaurant.appendChild(li);
-// };
-
 const renderMain = async () => {
-  console.log("test");
   nav.innerHTML = "Home";
   restaurantList.innerHTML = "";
-  // const pizzas = (await axios.get("/api/pizza")).data;
   const restaurants = (await axios.get("/api/restaurant")).data;
   await renderRestaurant(restaurants);
+  await renderWhatIsPizza(toppings);
 };
 
 const renderPopup = async (restDetails) => {
-  restaurantPopup.innerHTML = `${restDetails.name.toUpperCase()}`;
-  console.log(restDetails);
+  restaurantPopup.innerHTML = `<h2>${restDetails.name.toUpperCase()}</h2>`;
   const detailList = createEl();
-  const { neighborhood, year_opened, waitservice, slice, pizzas } = restDetails;
   const description = createEl("p");
+  const menuPreview = createEl("button");
+  const { neighborhood, year_opened, waitservice, slice, pizzas } = restDetails;
+
   description.innerHTML = `Neighborhood: ${neighborhood}<br>Since: ${new Date(
     year_opened
   ).getFullYear()}<br>Serving slices: ${
     slice ? "Yes" : "No"
   }<br>Waiter service: ${waitservice ? "Yes" : "No"}`;
-  detailList.append(description);
-  const menuPreview = createEl("button");
+
   menuPreview.id = "menupreview";
   menuPreview.innerHTML = `Pizza Preview`;
-  restaurantPopup.appendChild(detailList);
-  restaurantPopup.appendChild(menuPreview);
+
+  detailList.append(description);
+  restaurantPopup.append(detailList, menuPreview);
+
   restaurantsPizzas = pizzas;
 };
 
-const renderPizzas = async (restaurantsPizzas) => {
+const renderWhatIsPizza = async (toppings) => {};
+
+const renderPizzas = async (restaurantsPizzas, toppings) => {
+  const pizzaPile = createEl();
+  pizzaPile.id = "pizzapile";
   restaurantsPizzas.forEach((za) => {
-    const pie = createEl("p");
-    console.log(za);
+    const pie = createEl("li");
     za.unique_pizza.unique_name
-      ? (pie.innerHTML = `${za.unique_pizza.unique_name}`)
+      ? (pie.innerHTML = `${za.unique_pizza.unique_name} (${za.name})`)
       : (pie.innerHTML = `${za.name}`);
-    restaurantPopup.appendChild(pie);
+    for (let base of toppings) {
+      if (base.id === za.id && !za.unique_pizza.unique_name) {
+        if (base.toppings.length) {
+          pie.innerHTML += `<br><span id = toppingsLabel>Toppings:<span>`;
+          for (let topping of base.toppings) {
+            if (topping.name !== za.name) pizzaPile.appendChild(pie);
+            console.log(restaurantsPizzas);
+            const toppingsList = createEl("ul");
+            toppingsList.innerHTML = `${topping.name}`;
+            pie.appendChild(toppingsList);
+          }
+        }
+      }
+    }
+    if (za.unique_pizza.unique_name) pizzaPile.appendChild(pie);
   });
+  restaurantPopup.appendChild(pizzaPile);
 };
+
 let isPreview = false;
 document.addEventListener("click", async (ev) => {
   if (ev.target.className === "navpopup") window.close();
@@ -80,21 +85,28 @@ document.addEventListener("click", async (ev) => {
     renderAll();
   }
   if (ev.target.parentElement.className === "restaurant") {
-    restaurantId = await window.location.hash.slice(1);
-    // restDetails = (await axios.get(`/api/restaurant/${restaurantId}`)).data;
-    await window.open(`/${restaurantId}`, "popup", "width=600,height=600");
-    // renderDetails(restDetails);
+    // Had trouble getting the hash change to word properly. The hash would change correctly,
+    // but popup would open with previous hash, not changed.
+    // restaurantId = window.location.hash.slice(1);
+    restaurantId = ev.target.parentElement.id;
+    window.open(`/${restaurantId}`, "popup", "width=800,height=800");
   }
   if (ev.target.id === "menupreview") {
     if (!isPreview) {
-      renderPizzas(restaurantsPizzas);
+      renderPizzas(restaurantsPizzas, toppings);
       isPreview = true;
+    } else {
+      pizzaPile = document.querySelector("#pizzapile");
+      console.log(pizzaPile);
+      restaurantPopup.removeChild(pizzaPile);
+      isPreview = false;
     }
   }
 });
 
 document.addEventListener("DOMContentLoaded", async (ev) => {
   restaurantId = location.pathname.slice(1);
+  toppings = (await axios.get(`/api/pizza`)).data;
   restDetails = (await axios.get(`/api/restaurant/${restaurantId}`)).data;
   await renderPopup(restDetails);
 });

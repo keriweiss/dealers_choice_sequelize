@@ -23,10 +23,15 @@ body {
   flex-direction: column;
   /* background: rgb(255, 255, 255, 0.8); */
   color: white;
+  font-size: x-large;
+}
+
+#restaurant-list {
+  font-size: large;
 }
 
 nav {
-  font-size: large;
+  font-size: x-large;
   padding: 10px;
 }
 nav:hover {
@@ -35,12 +40,17 @@ nav:hover {
   color: black;
 }
 
-li:hover {
-  color: blue;
+h1 {
+  font-size: 70px;
+  -webkit-text-stroke: 2px black;
 }
 
-li,
-ul {
+h2 {
+  border: 7px solid white;
+  /* -webkit-text-stroke: 2px black; */
+}
+
+li {
   list-style-type: none;
   padding: 20px;
   text-align: center;
@@ -59,7 +69,8 @@ button {
   color: white;
   border: 0;
   background-color: transparent;
-  font-size: large;
+  font-size: xx-large;
+  font-weight: bold;
 }
 
 button:hover {
@@ -71,3 +82,17 @@ button:hover {
 button:focus {
   outline: 0;
 }
+
+ul {
+  padding: 0px;
+  font-size: medium;
+  text-align: left;
+}
+
+#toppingsLabel {
+  font-size: medium;
+}
+
+/* #menupreview {
+  border: 5px solid white;
+} */

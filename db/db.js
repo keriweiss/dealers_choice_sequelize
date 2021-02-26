@@ -145,14 +145,15 @@ const restaurants = [
   },
 ];
 const pizzas = [
-  { name: "cheese" },
-  { name: "vodka" },
-  { name: "salad" },
-  { name: "pepperoni" },
-  { name: "upside-down sicilian" },
-  { name: "honey" },
-  { name: "ham and pineapple", delicious: false },
-  { name: "seasonal vegetables" },
+  { name: "Cheese" },
+  { name: "Vodka" },
+  { name: "Salad" },
+  { name: "Pepperoni" },
+  { name: "Upside-down Sicilian" },
+  { name: "Honey" },
+  { name: "Ham and Pineapple", delicious: false },
+  { name: "Seasonal Vegetables" },
+  { name: "Margherita" },
 ];
 
 const syncAndSeed = async () => {
@@ -188,6 +189,7 @@ const syncAndSeed = async () => {
     honey,
     hamAndPineapple,
     seasonalVeg,
+    margherita,
   ] = await Promise.all(
     pizzas.map(({ name, delicious }) =>
       Pizza.create({
@@ -202,6 +204,10 @@ const syncAndSeed = async () => {
       restaurantId: salAndCarmine.id,
     },
     {
+      pizzaId: margherita.id,
+      restaurantId: salAndCarmine.id,
+    },
+    {
       pizzaId: pepperoni.id,
       restaurantId: salAndCarmine.id,
     },
@@ -211,6 +217,10 @@ const syncAndSeed = async () => {
     },
     {
       pizzaId: cheese.id,
+      restaurantId: joes.id,
+    },
+    {
+      pizzaId: margherita.id,
       restaurantId: joes.id,
     },
     {
@@ -228,12 +238,22 @@ const syncAndSeed = async () => {
       restaurantId: paulieGee.id,
     },
     {
+      unique_name: "Regina",
+      pizzaId: margherita.id,
+      restaurantId: paulieGee.id,
+    },
+    {
       unique_name: "Hellboy",
       pizzaId: honey.id,
       restaurantId: paulieGee.id,
     },
     {
       pizzaId: vodka.id,
+      restaurantId: rubirosa.id,
+    },
+    {
+      unique_name: "Fresca",
+      pizzaId: margherita.id,
       restaurantId: rubirosa.id,
     },
     {
@@ -285,6 +305,10 @@ const syncAndSeed = async () => {
       pizzaId: vodka.id,
       restaurantId: Luigi.id,
     },
+    {
+      pizzaId: margherita.id,
+      restaurantId: Luigi.id,
+    },
   ];
 
   await Promise.all(
@@ -331,6 +355,14 @@ const syncAndSeed = async () => {
     },
     {
       baseId: sicillian.id,
+      toppingsId: pepperoni.id,
+    },
+    {
+      baseId: margherita.id,
+      toppingsId: pepperoni.id,
+    },
+    {
+      baseId: salad.id,
       toppingsId: pepperoni.id,
     },
   ];
