@@ -6,7 +6,16 @@ const router = require("express").Router();
 router.get("/pizza", async (req, res, next) => {
   try {
     res.send(
-      await Pizza.findAll({ include: [{ model: Pizza, as: "toppings" }] })
+      await Pizza.findAll({
+        include: [{ model: Pizza, as: "toppings" }],
+        // include: [
+        //   {
+        //     model: Restaurant,
+        //     attributes: ["id"],
+        //     through: { attributes: ["unique_name"] },
+        //   },
+        // ],
+      })
     );
   } catch (err) {
     next(err);

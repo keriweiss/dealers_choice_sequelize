@@ -228,6 +228,10 @@ const syncAndSeed = async () => {
       restaurantId: joes.id,
     },
     {
+      pizzaId: salad.id,
+      restaurantId: joes.id,
+    },
+    {
       unique_name: "Porkypineapple",
       pizzaId: hamAndPineapple.id,
       restaurantId: paulieGee.id,
@@ -266,6 +270,7 @@ const syncAndSeed = async () => {
       restaurantId: rubirosa.id,
     },
     {
+      unique_name: "Arugula",
       pizzaId: salad.id,
       restaurantId: rubirosa.id,
     },
@@ -277,6 +282,7 @@ const syncAndSeed = async () => {
       pizzaId: pepperoni.id,
       restaurantId: bestPizza.id,
     },
+    { pizzaId: salad.id, restaurantId: bestPizza.id },
     {
       pizzaId: cheese.id,
       restaurantId: bestPizza.id,
@@ -359,10 +365,6 @@ const syncAndSeed = async () => {
     },
     {
       baseId: margherita.id,
-      toppingsId: pepperoni.id,
-    },
-    {
-      baseId: salad.id,
       toppingsId: pepperoni.id,
     },
   ];

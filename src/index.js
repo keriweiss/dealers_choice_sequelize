@@ -5,7 +5,7 @@ const nav = document.querySelector("nav");
 let restaurantList = document.querySelector("#restaurant-list");
 let restaurantPopup = document.querySelector("#restaurant-popup");
 
-let restDetails, restaurantsPizzas, pizzaPile, toppings;
+let restDetails, restaurantsPizzas, pizzaPile, toppings, uniqueNames;
 
 const renderRestaurant = (restaurants) => {
   for (const restaurant of restaurants) {
@@ -43,32 +43,60 @@ const renderPopup = async (restDetails) => {
   detailList.append(description);
   restaurantPopup.append(detailList, menuPreview);
 
+  uniqueNames = pizzas.map((za) => {
+    if (za.unique_pizza.unique_name) {
+      return za.name;
+    }
+    return null;
+  });
   restaurantsPizzas = pizzas;
 };
 
+// rendering pizza list for each restaurant, where if pizza has a unique name,
+// unique name is displayed with description in parenthesis
 const renderPizzas = async (restaurantsPizzas, toppings) => {
+  let allToppings = [];
+  const restPizzas = restaurantsPizzas.map((za) => za.name);
   pizzaPile = createEl();
+  pizzaPile.id = "pizzaPile";
   restaurantsPizzas.forEach((za) => {
     const pie = createEl("li");
     za.unique_pizza.unique_name
       ? (pie.innerHTML = `${za.unique_pizza.unique_name} (${za.name})`)
       : (pie.innerHTML = `${za.name}`);
+
+    // creating array of toppings for each restaurant, where if the topping is on a pizza
+    // with a unique name, the topping is left off of the list.
+
     for (let base of toppings) {
-      if (base.id === za.id && !za.unique_pizza.unique_name) {
-        if (base.toppings.length) {
-          pie.innerHTML += `<br><span id = toppingsLabel>Toppings:<span>`;
-          for (let topping of base.toppings) {
-            if (topping.name !== za.name) pizzaPile.appendChild(pie);
-            const toppingsList = createEl("ul");
-            toppingsList.innerHTML = `${topping.name}`;
-            pie.appendChild(toppingsList);
-          }
+      if (
+        base.id === za.id &&
+        !za.unique_pizza.unique_name &&
+        base.toppings.length
+      ) {
+        for (let topping of base.toppings) {
+          if (topping.name !== za.name) pizzaPile.appendChild(pie);
+          if (
+            restPizzas.includes(topping.name) &&
+            !uniqueNames.includes(topping.name)
+          )
+            allToppings.push(topping.name);
         }
       }
     }
     if (za.unique_pizza.unique_name) pizzaPile.appendChild(pie);
   });
+  const uniqueToppings = new Set(allToppings);
+  const toppingList = createEl("h4");
+  if (allToppings.length) toppingList.innerHTML = "Toppings:";
+
   restaurantPopup.appendChild(pizzaPile);
+  pizzaPile.appendChild(toppingList);
+  uniqueToppings.forEach((topping) => {
+    const aTopping = createEl("ul");
+    aTopping.innerHTML = topping;
+    toppingList.appendChild(aTopping);
+  });
 };
 
 let isPreview = false;
