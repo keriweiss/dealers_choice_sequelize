@@ -1,10 +1,10 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
+const { Sequelize, DataTypes, Model } = require('sequelize');
 const db = new Sequelize(
-  process.env.DATABASE_URL || "postgres://localhost/nyc_pizza"
+  process.env.DATABASE_URL || 'postgres://localhost/nyc_pizza'
 );
 
 class BuildYourOwn extends Model {}
-BuildYourOwn.init({}, { sequelize: db, modelName: "build_your_own" });
+BuildYourOwn.init({}, { sequelize: db, modelName: 'build_your_own' });
 
 class Restaurant extends Model {}
 Restaurant.init(
@@ -34,7 +34,7 @@ Restaurant.init(
       allowNull: false,
     },
   },
-  { sequelize: db, modelName: "restaurant" }
+  { sequelize: db, modelName: 'restaurant' }
 );
 
 class Pizza extends Model {}
@@ -55,7 +55,7 @@ Pizza.init(
       defaultValue: true,
     },
   },
-  { sequelize: db, modelName: "pizza" }
+  { sequelize: db, modelName: 'pizza' }
 );
 
 class Unique_pizza extends Model {}
@@ -68,17 +68,17 @@ Unique_pizza.init(
     },
     unique_name: DataTypes.STRING,
   },
-  { sequelize: db, modelName: "unique_pizza" }
+  { sequelize: db, modelName: 'unique_pizza' }
 );
 
 Pizza.belongsToMany(Pizza, {
-  foreignKey: "baseId",
-  as: "toppings",
+  foreignKey: 'baseId',
+  as: 'toppings',
   through: BuildYourOwn,
 });
 Pizza.belongsToMany(Pizza, {
-  foreignKey: "toppingsId",
-  as: "base",
+  foreignKey: 'toppingsId',
+  as: 'base',
   through: BuildYourOwn,
 });
 Pizza.belongsToMany(Restaurant, { through: Unique_pizza });
@@ -86,74 +86,74 @@ Restaurant.belongsToMany(Pizza, { through: Unique_pizza });
 
 const restaurants = [
   {
-    id: "salandcarmine",
-    name: "Sal and Carmine",
-    neighborhood: "UWS",
+    id: 'salandcarmine',
+    name: 'Sal and Carmine',
+    neighborhood: 'UWS',
     waitservice: false,
-    year_opened: 1959,
-    URL: "https://www.salandcarminepizza.com/",
+    year_opened: 'Jan 1, 1959',
+    URL: 'https://www.salandcarminepizza.com/',
   },
   {
-    id: "joes",
-    name: "Joes",
-    neighborhood: "Greenwich Village",
+    id: 'joes',
+    name: 'Joes',
+    neighborhood: 'Greenwich Village',
     waitservice: false,
-    year_opened: 1975,
-    URL: "http://www.joespizzanyc.com/",
+    year_opened: 'Jan, 1, 1975',
+    URL: 'http://www.joespizzanyc.com/',
   },
   {
-    id: "pauliegees",
+    id: 'pauliegees',
     name: "Paulie Gee's",
-    neighborhood: "Greenpoint",
+    neighborhood: 'Greenpoint',
     waitservice: true,
-    year_opened: 2010,
-    URL: "https://pauliegee.com/",
+    year_opened: 'Jan, 1, 2010',
+    URL: 'https://pauliegee.com/',
   },
   {
-    id: "rubirosa",
-    name: "Rubirosa",
-    neighborhood: "Nolita",
+    id: 'rubirosa',
+    name: 'Rubirosa',
+    neighborhood: 'Nolita',
     waitservice: true,
     slice: false,
-    year_opened: 2010,
-    URL: "https://www.rubirosanyc.com/",
+    year_opened: 'Jan, 1, 2010',
+    URL: 'https://www.rubirosanyc.com/',
   },
   {
-    id: "bestpizza",
-    name: "Best Pizza",
-    neighborhood: "Williamsburg",
+    id: 'bestpizza',
+    name: 'Best Pizza',
+    neighborhood: 'Williamsburg',
     waitservice: false,
     slice: false,
-    year_opened: 2010,
-    URL: "https://www.bestpizzawilliamsburg.com/",
+    year_opened: 'Jan, 1, 2010',
+    URL: 'https://www.bestpizzawilliamsburg.com/',
   },
   {
-    id: "landb",
-    name: "L & B Spumoni Gardens",
-    neighborhood: "Bensonhurst",
+    id: 'landb',
+    name: 'L & B Spumoni Gardens',
+    neighborhood: 'Bensonhurst',
     waitservice: true,
-    year_opened: 1939,
-    URL: "https://spumonigardens.com/",
+    year_opened: 'Jan, 1, 1939',
+    URL: 'https://spumonigardens.com/',
   },
   {
-    id: "luigis",
-    name: "Luigis",
-    neighborhood: "South Slope",
+    id: 'luigis',
+    name: 'Luigis',
+    neighborhood: 'South Slope',
     waitservice: false,
-    year_opened: 1973,
-    URL: "http://luigispizzabrooklyn.com/",
+    year_opened: 'Jan, 1, 1973',
+    URL: 'http://luigispizzabrooklyn.com/',
   },
 ];
 const pizzas = [
-  { name: "Cheese" },
-  { name: "Vodka" },
-  { name: "Salad" },
-  { name: "Pepperoni" },
-  { name: "Upside-down Sicilian" },
-  { name: "Honey" },
-  { name: "Ham and Pineapple", delicious: false },
-  { name: "Seasonal Vegetables" },
-  { name: "Margherita" },
+  { name: 'Cheese' },
+  { name: 'Vodka' },
+  { name: 'Salad' },
+  { name: 'Pepperoni' },
+  { name: 'Upside-down Sicilian' },
+  { name: 'Honey' },
+  { name: 'Ham and Pineapple', delicious: false },
+  { name: 'Seasonal Vegetables' },
+  { name: 'Margherita' },
 ];
 
 const syncAndSeed = async () => {
@@ -232,22 +232,22 @@ const syncAndSeed = async () => {
       restaurantId: joes.id,
     },
     {
-      unique_name: "Porkypineapple",
+      unique_name: 'Porkypineapple',
       pizzaId: hamAndPineapple.id,
       restaurantId: paulieGee.id,
     },
     {
-      unique_name: "Greenpointer",
+      unique_name: 'Greenpointer',
       pizzaId: salad.id,
       restaurantId: paulieGee.id,
     },
     {
-      unique_name: "Regina",
+      unique_name: 'Regina',
       pizzaId: margherita.id,
       restaurantId: paulieGee.id,
     },
     {
-      unique_name: "Hellboy",
+      unique_name: 'Hellboy',
       pizzaId: honey.id,
       restaurantId: paulieGee.id,
     },
@@ -256,7 +256,7 @@ const syncAndSeed = async () => {
       restaurantId: rubirosa.id,
     },
     {
-      unique_name: "Fresca",
+      unique_name: 'Fresca',
       pizzaId: margherita.id,
       restaurantId: rubirosa.id,
     },
@@ -265,12 +265,12 @@ const syncAndSeed = async () => {
       restaurantId: rubirosa.id,
     },
     {
-      unique_name: "Honey Pie",
+      unique_name: 'Honey Pie',
       pizzaId: honey.id,
       restaurantId: rubirosa.id,
     },
     {
-      unique_name: "Arugula",
+      unique_name: 'Arugula',
       pizzaId: salad.id,
       restaurantId: rubirosa.id,
     },
