@@ -114,7 +114,7 @@ const restaurants = [
     neighborhood: 'Nolita',
     waitservice: true,
     slice: false,
-    year_opened: 'Jan 1, 2010',
+    year_opened: 'Jan 4, 2010',
     URL: 'https://www.rubirosanyc.com/',
   },
   {
@@ -123,7 +123,7 @@ const restaurants = [
     neighborhood: 'Williamsburg',
     waitservice: false,
     slice: false,
-    year_opened: 'Jan 1, 2010',
+    year_opened: 'Jan 3, 2010',
     URL: 'https://www.bestpizzawilliamsburg.com/',
   },
   {
@@ -131,7 +131,7 @@ const restaurants = [
     name: 'L & B Spumoni Gardens',
     neighborhood: 'Bensonhurst',
     waitservice: true,
-    year_opened: 'Jan 1, 1939',
+    year_opened: 'Feb 1, 1939',
     URL: 'https://spumonigardens.com/',
   },
   {
@@ -139,7 +139,7 @@ const restaurants = [
     name: 'Luigis',
     neighborhood: 'South Slope',
     waitservice: false,
-    year_opened: 'Jan 1, 1973',
+    year_opened: 'Jan 2, 1973',
     URL: 'http://luigispizzabrooklyn.com/',
   },
 ];
