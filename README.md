@@ -8,5 +8,7 @@ npm run start:dev
 
 server on port 1337 : http://localhost:1337/
 
+heroku: https://nycpizza.herokuapp.com/
+
 
 Enjoy!!
