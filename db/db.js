@@ -12,7 +12,6 @@ Restaurant.init(
     id: {
       type: DataTypes.STRING(20),
       primaryKey: true,
-      // defaultValue: DataTypes.UUIDV4,
     },
     name: {
       type: DataTypes.STRING(30),
