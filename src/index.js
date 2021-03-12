@@ -3,6 +3,7 @@ import renderMain from "./main/main";
 import { renderPopup, restaurantsPizzas } from "./popup/popup";
 import renderPizzas from "./popup/pizzas";
 
+//love this
 const createEl = (el = "div") => document.createElement(el);
 const nav = document.querySelector("nav");
 let restaurantList = document.querySelector("#restaurant-list");
